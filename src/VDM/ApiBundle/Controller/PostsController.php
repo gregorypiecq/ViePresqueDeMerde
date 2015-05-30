@@ -8,11 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostsController extends FOSRestController
 {
-    private function getViewHandler()
-    {
-      return $this->container->get('fos_rest.view_handler');
-    }
-    
     public function getPostsAction(Request $request)
     {
         

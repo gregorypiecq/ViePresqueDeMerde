@@ -1,0 +1,11 @@
+vdm_api:
+    resource: "@VDMApiBundle/Resources/config/routing.yml"
+    prefix:   /
+
+vdm_update_post:
+    resource: "@VDMUpdatePostBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

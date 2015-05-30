@@ -12,4 +12,171 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
+    /**
+     * Methode pour recuperer les post en fonction de l'auteur, date min, date max
+     * 
+     * @param type $author
+     * @param type $from
+     * @param type $to
+     * @return type
+     */
+    public function findByAuthorFromTo($author, $from, $to){
+        $fields = array('a.id', 'a.content', 'a.date', 'a.author');
+        $queryBuilder = $this->createQueryBuilder('a');
+        $queryBuilder->select($fields);
+        $queryBuilder->where('a.author = :author')
+                ->andWhere('a.date >= :from')
+                ->andWhere('a.date <= :to')
+                ->orderBy('a.date', 'ASC')
+                ->setParameter('author', $author)
+                ->setParameter('from', $from)
+                ->setParameter('to', $to);
+        
+        return $queryBuilder->getQuery()->execute();
+    }
+    /**
+     * Methode pour recuperer les post en fonction de l'auteur, date min
+     * 
+     * @param type $author
+     * @param type $from
+     * @return type
+     */
+    public function findByAuthorForm($author, $from) {
+        $fields = array('a.id', 'a.content', 'a.date', 'a.author');
+        $queryBuilder = $this->createQueryBuilder('a');
+        $queryBuilder->select($fields);
+        
+        $queryBuilder->where('a.author = :author')
+                ->andWhere('a.date >= :from')
+                ->orderBy('a.date', 'ASC')
+                ->setParameter('author', $author)
+                ->setParameter('from', $from);
+        
+        return $queryBuilder->getQuery()->execute();
+    }
+    /**
+     * Methode pour recuperer les post en fonction de l'auteur, date max
+     * 
+     * @param type $author
+     * @param type $to
+     * @return type
+     */
+    public function findByAuthorTo($author, $to){
+        $fields = array('a.id', 'a.content', 'a.date', 'a.author');
+        $queryBuilder = $this->createQueryBuilder('a');
+        $queryBuilder->select($fields);
+        
+        $queryBuilder->where('a.author = :author')
+                ->andWhere('a.date <= :to')
+                ->orderBy('a.date', 'ASC')
+                ->setParameter('author', $author)
+                ->setParameter('to', $to);
+        
+        return $queryBuilder->getQuery()->execute();
+    }
+    /**
+     * Methode pour recuperer les post en fonction de la date min, date max
+     * 
+     * @param type $from
+     * @param type $to
+     * @return type
+     */
+    public function findByFromTo($from, $to){
+        $fields = array('a.id', 'a.content', 'a.date', 'a.author');
+        $queryBuilder = $this->createQueryBuilder('a');
+        $queryBuilder->select($fields);
+        if($from == $to){
+            $queryBuilder->where('a.date = :from')
+                ->orderBy('a.date', 'ASC')
+                ->setParameter('from', $from);
+        } else {
+            $queryBuilder->where('a.date >= :from')
+                ->andWhere('a.date <= :to')
+                ->orderBy('a.date', 'ASC')
+                ->setParameter('from', $from)
+                ->setParameter('to', $to);
+        }
+        return $queryBuilder->getQuery()->execute();
+    }
+    /**
+     * Methode pour recuperer les post en fonction de la date min
+     * 
+     * @param type $from
+     * @return type
+     */
+    public function findByFrom($from){
+        $fields = array('a.id', 'a.content', 'a.date', 'a.author');
+        $queryBuilder = $this->createQueryBuilder('a');
+        $queryBuilder->select($fields);
+        
+        $queryBuilder->where('a.date >= :from')
+                ->orderBy('a.date', 'ASC')
+                ->setParameter('from', $from);
+        
+        return $queryBuilder->getQuery()->execute();
+    }
+    /**
+     * Methode pour recuperer les post en fonction de la date max
+     * @param type $to
+     * @return type
+     */
+    public function findByTo($to){
+        $fields = array('a.id', 'a.content', 'a.date', 'a.author');
+        $queryBuilder = $this->createQueryBuilder('a');
+        $queryBuilder->select($fields);
+        
+        $queryBuilder->where('a.date <= :to')
+                ->orderBy('a.date', 'ASC')
+                ->setParameter('to', $to);
+        
+        return $queryBuilder->getQuery()->execute();
+    }
+    /**
+     * Methode pour récuperer tous les posts
+     * 
+     * @return type
+     */
+    public function findAll() {
+        $fields = array('a.id', 'a.content', 'a.date', 'a.author');
+        
+        $query = $this->createQueryBuilder('a');
+        
+        $query->select($fields);
+        
+        return $query->getQuery()->execute();
+    }
+    /**
+     * Methode pour récuperer un post en fonction de son id
+     * 
+     * @param type $id
+     * @return type
+     */
+    public function findById($id){
+        $fields = array('a.id', 'a.content', 'a.date', 'a.author');
+        
+        $query = $this->createQueryBuilder('a');
+        
+        $query->select($fields)
+                ->where('a.id = :id')
+                ->setParameter('id', $id);
+        
+        return $query->getQuery()->execute();
+    }
+    /**
+     * Methode pour recuperer des posts en fonction de son auteur
+     * 
+     * @param type $author
+     * @return type
+     */
+    public function findByAuthor($author){
+        $fields = array('a.id', 'a.content', 'a.date', 'a.author');
+        
+        $query = $this->createQueryBuilder('a');
+        
+        $query->select($fields)
+                ->where('a.author = :author')
+                ->setParameter('author', $author);
+        
+        return $query->getQuery()->execute();
+    }
 }

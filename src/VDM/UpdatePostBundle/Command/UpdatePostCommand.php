@@ -126,15 +126,15 @@ class UpdatePostCommand extends ContainerAwareCommand
                     $idVdm = $this->getIdVdm($div);
                     $content = $this->getArticleContent($div);
                     
-                    $arrayDateUser = $this->getArticleDateUser($div);
+                    $arrayDateAuthor = $this->getArticleDateAuthor($div);
                     // formatage de la date pour la base de données
-                    $dateFr = $arrayDateUser['date'];
+                    $dateFr = $arrayDateAuthor['date'];
                     $date = \DateTime::createFromFormat('d/m/Y', $dateFr);
                     $date->format('Y-m-d');
                     
-                    $user = $arrayDateUser['user'];
+                    $author = $arrayDateAuthor['author'];
                     
-                    $this->addArticle($content, $date, $user, $idVdm);
+                    $this->addArticle($content, $date, $author, $idVdm);
                     
                     $this->_cptPost++;
                 }
@@ -185,14 +185,14 @@ class UpdatePostCommand extends ContainerAwareCommand
      * @param type $div
      * @return type array
      */
-    protected function getArticleDateUser($div){
+    protected function getArticleDateAuthor($div){
         $container = $div->getElementsByTagName('div')->item(0)->nodeValue;
         // recuperation de la chaine après "Le"             
         $arrayData = explode('Le', $container);
         // création du tableau avec les informations après la chaine "Le"
         $arrayData = explode(' ', $arrayData[1]);
         // la date se trouve à l'index 1 du tableau et le nom de l'utiliosateur se trouve à l'index 8
-        $arrayInfo = array('date'=>$arrayData[1], 'user' => utf8_decode($arrayData[8]));
+        $arrayInfo = array('date'=>$arrayData[1], 'author' => utf8_decode($arrayData[8]));
         
         return $arrayInfo;
     }
@@ -201,10 +201,10 @@ class UpdatePostCommand extends ContainerAwareCommand
      * 
      * @param type $content contenu du post
      * @param type $date date du post
-     * @param type $user auteur
+     * @param type $author auteur
      * @param type $idVdm idvdm du post
      */
-    protected function addArticle($content, $date, $user, $idVdm){
+    protected function addArticle($content, $date, $author, $idVdm){
        
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
         
@@ -221,7 +221,11 @@ class UpdatePostCommand extends ContainerAwareCommand
 
         $article->setContent($content);
         $article->setDate($date);
-        $article->setUser($user);
+        // replacement de l'utilisateur Anonyme par Genius pour repondre au besoin d'avoir un utilisateur Genius
+        if($author == 'Anonyme' || $author == 'anonyme' || $author == ''){
+            $author = 'Genius';
+        }
+        $article->setAuthor($author);
         
         $em->persist($article);
         $em->flush();

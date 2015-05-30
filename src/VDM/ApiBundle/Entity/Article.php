@@ -29,18 +29,18 @@ class Article
     private $content;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="date")
      */
     private $date;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="user", type="string", length=255)
+     * @ORM\Column(name="author", type="string", length=255)
      */
-    private $user;
+    private $author;
 
     /**
      * @var interger
@@ -107,26 +107,26 @@ class Article
     }
 
     /**
-     * Set user
+     * Set author
      *
-     * @param string $user
+     * @param string $author
      * @return Article
      */
-    public function setUser($user)
+    public function setAuthor($author)
     {
-        $this->user = $user;
+        $this->author = $author;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Get author
      *
      * @return string 
      */
-    public function getUser()
+    public function getAuthor()
     {
-        return $this->user;
+        return $this->author;
     }
 
     /**

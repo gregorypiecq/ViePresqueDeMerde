@@ -1,69 +1,51 @@
-Symfony Standard Edition
+Application Vie Presque de Merde
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+Cette application permet de récupérer en ligne de commande un nombre de post sur le site Vie de merde.
+Elle expose en rest les posts récupérés.
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
-
-What's inside?
+Installation
 --------------
 
-The Symfony Standard Edition is configured with the following defaults:
+Prérequis:
 
-  * An AppBundle you can use to start coding;
+  * Composer
 
-  * Twig as the only configured template engine;
+  * PHPUnit
 
-  * Doctrine ORM/DBAL;
+Après avoir récupérer les sources:
 
-  * Swiftmailer;
+  * Exécuter un composer update pour télécharger les librairies requises
 
-  * Annotations enabled for everything.
+  * Modifier les informations base de données /app/config/parameters.yml
 
-It comes pre-configured with the following bundles:
+  * Créer la base de donnée : app/console doctrine:database:create
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+  * Créer les table : app/console doctrine:schema:update
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+Récupérer les posts
+-------------------
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+  * Exécuter la commande : app/console vdm:update
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+  * Choisissez le nombre de posts que vous souhaitez récupérer
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+  * Vous serez informé sur le nombre de posts ajouté ou mis à jour
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+Afficher les posts récupérés
+----------------------------
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+  * Affichage de tous les posts : saisir en complément de l'url de votre projet sur votre serveur /api/posts
 
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
+  * Affichage d'un post : saisir en complément de l'url de votre projet sur votre serveur /api/posts/1 pour le post dont l'id est 1
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+  * Affichage des posts d'un auteur : saisir en complément de l'url de votre projet sur votre serveur /api/posts?author=Genius
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
+  * Affichage des posts entre deux date : saisir en complément de l'url de votre projet sur votre serveur /api/posts?from="date"&to="date"
 
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
+  * Vous pouvez cumuler les paramètres pour affiner votre recherche
 
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
+Exécution des tests unitaire
+----------------------------
 
-Enjoy!
-
-[1]:  http://symfony.com/doc/2.6/book/installation.html
-[6]:  http://symfony.com/doc/2.6/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.6/book/doctrine.html
-[8]:  http://symfony.com/doc/2.6/book/templating.html
-[9]:  http://symfony.com/doc/2.6/book/security.html
-[10]: http://symfony.com/doc/2.6/cookbook/email.html
-[11]: http://symfony.com/doc/2.6/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.6/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.6/bundles/SensioGeneratorBundle/index.html
+  * Exécution de la commande : phpunit --verbose  -c app/

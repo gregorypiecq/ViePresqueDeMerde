@@ -1,0 +1,14 @@
+default:
+    extensions:
+        Behat\Symfony2Extension: ~
+        Behat\WebApiExtension: ~
+        Behat\MinkExtension:
+            sessions:
+                default:
+                  symfony2: ~
+            base_url: http://localhost:8888/viePresqueDeMerde/web/app_dev.php/api
+            goutte: ~
+    suites:
+        default:
+            contexts: [FeatureContext, PostsContext, WebContext]
+        

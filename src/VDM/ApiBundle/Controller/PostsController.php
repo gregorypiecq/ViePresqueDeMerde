@@ -8,6 +8,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostsController extends FOSRestController
 {
+    /**
+     * Methode pour recuperer les posts
+     * 
+     * En fonction des parametre de requete, recherche en fonction de l'auteur, 
+     * a partir d'une date, avant une date, entre deux dates et tous les parametre en meme temps
+     * 
+     * A partir de l'url /api/posts(?author=&form=&to=)
+     * 
+     * @param Request $request
+     * @return type
+     */
     public function getPostsAction(Request $request)
     {
         
@@ -36,21 +47,28 @@ class PostsController extends FOSRestController
         
         if (!$articles) {
             $view = View::create()->setData(array('message' => 'Aucun post trouvé !', 'count'=>0));
-            return $this->getViewHandler()->handle($view);
+            return $this->handleView($view);
         }
         
         
         $view = View::create()->setData(array('posts' => $articles, 'count'=>count($articles)));
-        return $this->getViewHandler()->handle($view);
+        return $this->handleView($view);
     }
-    
+    /**
+     * Methode pour récuperer un post par son id
+     * 
+     * Url /api/posts/id
+     * 
+     * @param type $id
+     * @return type
+     */
     public function getPostAction($id){
         $article = $this->getDoctrine()->getManager()->getRepository('VDMApiBundle:Article')->findById($id);
         if (!$article) {
             $view = View::create()->setData(array('message' => 'Aucun post trouvé !', 'count'=>0));
-            return $this->getViewHandler()->handle($view);
+            return $this->handleView($view);
         }
         $view = View::create()->setData(array('post' => $article));
-        return $this->getViewHandler()->handle($view);
+        return $this->handleView($view);
     }
 }

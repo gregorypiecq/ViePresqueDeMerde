@@ -3,6 +3,7 @@
 namespace VDM\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Article
@@ -31,7 +32,7 @@ class Article
     /**
      * @var \Date
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 

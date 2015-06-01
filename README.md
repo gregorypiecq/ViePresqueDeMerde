@@ -2,7 +2,7 @@ Application Vie Presque de Merde
 ========================
 
 Cette application permet de récupérer en ligne de commande un nombre de post sur le site Vie de merde.
-Elle expose en rest les posts récupérés.
+Elle expose en REST les posts récupérés.
 
 Installation
 --------------
@@ -21,7 +21,7 @@ Après avoir récupérer les sources:
 
   * Créer la base de donnée : app/console doctrine:database:create
 
-  * Créer les table : app/console doctrine:schema:update
+  * Créer les tables : app/console doctrine:schema:update
 
 Récupérer les posts
 -------------------
